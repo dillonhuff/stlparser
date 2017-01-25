@@ -1,7 +1,7 @@
 import sys
 import struct
 
-class Vec3:
+class STLVec3:
     def __init__(self, x_coord, y_coord, z_coord):
         self.x = x_coord
         self.y = y_coord
@@ -29,7 +29,7 @@ def readVec3(f):
     y = readFloat(f)
     z = readFloat(f)
 
-    return Vec3(x, y, z)
+    return STLVec3(x, y, z)
     
 def readUnsignedInt(f):
     uint_bytes = f.read(4)
