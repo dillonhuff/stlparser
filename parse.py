@@ -7,12 +7,13 @@ class Vec3:
         self.y = y_coord
         self.z = z_coord
 
-class Triangle:
-    def __init__(self, normal, v0, v1, v2):
+class STLTriangle:
+    def __init__(self, normal, v0, v1, v2, attributes):
         self.normal = normal
         self.v0 = v0
         self.v1 = v1
         self.v2 = v2
+        self.attributes = attributes
 
 class STLData:
     def __init__(self, header, tris):
@@ -34,13 +35,18 @@ def readUnsignedInt(f):
     uint_bytes = f.read(4)
     return struct.unpack('I', uint_bytes)[0]
 
+def readUINT16(f):
+    uint16_bytes = f.read(2)
+    return struct.unpack('H', uint16_bytes)[0]
+
 def readTriangle(f):
     norm = readVec3(f)
     v0 = readVec3(f)
     v1 = readVec3(f)
     v2 = readVec3(f)
+    attributes = readUINT16(f)
 
-    return Triangle(norm, v0, v1, v2)
+    return STLTriangle(norm, v0, v1, v2, attributes)
 
 def printVec3(v):
     print '(', v.x, ', ', v.y, ', ', v.z, ')'
@@ -59,17 +65,8 @@ tris = []
 
 for i in range(num_tris):
     tris.append(readTriangle(f))
-    f.read(2)
 
-final_byte = f.read(1)
-
-# f_byte = final_byte
-# print "Final byte = ", f_byte
-
-# while f_byte != "":
-#     print "Bytes left = ", f_byte
-
-assert(final_byte == "")
+#assert(final_byte == "")
 
 stlData = STLData(header, tris)
 
