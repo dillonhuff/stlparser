@@ -51,22 +51,25 @@ def readTriangle(f):
 def printVec3(v):
     print '(', v.x, ', ', v.y, ', ', v.z, ')'
 
-f = open(sys.argv[1], "rb")
+def parseSTL(file_name):
+    f = open(file_name, "rb")
 
-header = f.read(80)
+    header = f.read(80)
 
-print "STL HEADER = ", header
+    print "STL HEADER = ", header
 
-num_tris = readUnsignedInt(f)
+    num_tris = readUnsignedInt(f)
 
-tris = []
+    tris = []
 
-for i in range(num_tris):
-    tris.append(readTriangle(f))
+    for i in range(num_tris):
+        tris.append(readTriangle(f))
 
-#assert(final_byte == "")
+    stlData = STLData(header, tris)
 
-stlData = STLData(header, tris)
+    return stlData
+
+stlData = parseSTL(sys.argv[1])
 
 for triangle in stlData.tris:
     print "---- TRIANGLE ----"
