@@ -59,6 +59,17 @@ tris = []
 
 for i in range(num_tris):
     tris.append(readTriangle(f))
+    f.read(2)
+
+final_byte = f.read(1)
+
+# f_byte = final_byte
+# print "Final byte = ", f_byte
+
+# while f_byte != "":
+#     print "Bytes left = ", f_byte
+
+assert(final_byte == "")
 
 stlData = STLData(header, tris)
 
