@@ -59,8 +59,6 @@ print "STL HEADER = ", header
 
 num_tris = readUnsignedInt(f)
 
-print "Num triangles = ", num_tris
-
 tris = []
 
 for i in range(num_tris):
